@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket  = "sts-terraform-remote-state"
-    key     = "devops_pipeline_demo/dev"
+    key     = "devops_pipeline_demo/prod"
     region  = "us-east-1"
     profile = "sts"
   }

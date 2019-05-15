@@ -20,9 +20,9 @@ variable "vpc_security_group_ids" {
 variable "subnet_id" {
   
 }
-variable "role" {
+# variable "role" {
   
-}
+# }
 
 variable "OSDiskSize" {
   default = "8"
