@@ -10,12 +10,20 @@ variable "ami" {
 variable "instance_type" {
   default = "t3.micro"
 }
+variable "key" {
+  
+}
+
 variable "vpc_security_group_ids" {
   type = "list"
 }
 variable "subnet_id" {
   
 }
+variable "role" {
+  
+}
+
 variable "OSDiskSize" {
   default = "8"
 }
