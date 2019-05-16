@@ -14,10 +14,8 @@ module "ec2_server" {
     instance_type = "t3.medium"
 
     vpc_security_group_ids = ["sg-9adee2eb"]
-    subnet_id = "subnet-c6cb5d9c"
 
-    ami = "ami-0de53d8956e8dcf80"
-    name = "dev_server"
+    name = "prod_server"
 
     key = "demo_pipeline"
 }

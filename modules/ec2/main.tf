@@ -2,8 +2,17 @@ provider "aws" {
   profile = "${var.profile}"
   region = "${var.region}"
 }
+data "aws_ami" "amazon-linux-2" {
+ most_recent = true
+ owners = ["amazon"]
+
+ filter {
+   name   = "name"
+   values = ["amzn2-ami-hvm*"]
+ }
+}
 resource "aws_instance" "server" {
-  ami           = "${var.ami}"
+  ami           = "${data.aws_ami.amazon-linux-2.id}"
   instance_type = "${var.instance_type}"
 
   key_name = "${var.key}"
