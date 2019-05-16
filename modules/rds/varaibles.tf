@@ -13,9 +13,16 @@ variable "engine" {
 variable "engine_version" {
   default = "5.7"
 }
+variable "db_subnet_group" {
+
+}
 variable "db_instance_class" {
   
 }
+variable "multi_az" {
+  
+}
+
 variable "db_name" {
   
 }
@@ -28,3 +35,7 @@ variable "db_password" {
 variable "db_parameter_group" {
   default = "default.mysql5.7"
 }
+variable "final_snapshot" {
+  default = true 
+}
+
