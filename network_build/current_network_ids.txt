@@ -1,0 +1,24 @@
+    Non-Prod:
+    VPC ID:                 vpc-0e3945d5888632944
+    Public subnet-1 ID:     subnet-02ccc03ce0ce2a594
+    Public subnet-2 ID:     subnet-0a1f8963d08b10d8f
+    Private subnet-1 ID:    subnet-058b27ca7199c5221
+    Private subnet-2 ID:    subnet-0c7af501f077ba012
+    RDS subnet group ID:    non_prod_subnet_group
+
+    Testing:
+    VPC ID:                 vpc-0c009fdd2974cd18f
+    Public subnet-1 ID:     subnet-0f93d2a6f54b7beb4
+    Public subnet-2 ID:     subnet-0b984ab74d367fef3
+    Private subnet-1 ID:    subnet-0b710219f21bb0f5f
+    Private subnet-2 ID:    subnet-0ea3a711d82a3c9f0
+    RDS subnet group ID:    testing_subnet_group
+
+    Prod:
+    VPC ID:                 vpc-0a906e83285178906
+    Public subnet-1 ID:     subnet-0f4beb23f42b5cf74
+    Public subnet-2 ID:     subnet-0d89836682aac5152
+    Private subnet-1 ID:    subnet-06ee7221fb5bdeecb
+    Private subnet-2 ID:    subnet-068405c71f0a02f06
+    RDS subnet group ID:    prod_subnet_group
+  

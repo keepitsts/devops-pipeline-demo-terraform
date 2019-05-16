@@ -141,7 +141,7 @@ resource "aws_vpc_endpoint" "dynamodb" {
 
 #----------Create RDS subnet groups----------
 resource "aws_db_subnet_group" "subnet_group" {
-  name       = "main"
+  name       = "${var.env}_subnet_group"
   subnet_ids = ["${aws_subnet.private_subnet-1.id}", "${aws_subnet.private_subnet-2.id}"]
 
   tags = {

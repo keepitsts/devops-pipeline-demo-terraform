@@ -17,3 +17,7 @@ output "private-subnet-id-1" {
 output "private-subnet-id-2" {
     value = "${aws_subnet.private_subnet-2.id}"
 }
+
+output "rds-subgroup-id" {
+    value = "${aws_db_subnet_group.subnet_group.id}"
+}
