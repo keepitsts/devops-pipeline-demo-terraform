@@ -4,9 +4,6 @@ variable "profile" {
 variable "region" {
   default = "us-east-1"
 }
-variable "ami" {
-  
-}
 variable "instance_type" {
   default = "t3.micro"
 }
@@ -14,15 +11,15 @@ variable "key" {
   
 }
 
-variable "vpc_security_group_ids" {
+variable "security_groups" {
   type = "list"
 }
 variable "subnet_id" {
   
 }
-variable "role" {
+# variable "role" {
   
-}
+# }
 
 variable "OSDiskSize" {
   default = "8"
