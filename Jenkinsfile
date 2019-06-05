@@ -24,59 +24,59 @@ pipeline {
             }
         }
 
-        // stage('TerraformFormat'){
-        //     steps {
-        //         dir('jenkins-terraform-pipeline/ec2_pipeline/'){
-        //             sh "terraform fmt -list=true -write=false -diff=true -check=true"
-        //         }
-        //     }
-        // }
+        stage('TerraformFormat'){
+            steps {
+                dir('/dev'){
+                    sh "terraform fmt -list=true -write=false -diff=true -check=true"
+                }
+            }
+        }
 
-        // stage('TerraformValidate'){
-        //     steps {
-        //         dir('jenkins-terraform-pipeline/ec2_pipeline/'){
-        //             sh "terraform validate"
-        //         }
-        //     }
-        // }
+        stage('TerraformValidate'){
+            steps {
+                dir('/dev'){
+                    sh "terraform validate"
+                }
+            }
+        }
 
-        // stage('TerraformPlan'){
-        //     steps {
-        //         dir('jenkins-terraform-pipeline/ec2_pipeline/'){
-        //             script {
-        //                 try {
-        //                     sh "terraform workspace new ${params.WORKSPACE}"
-        //                 } catch (err) {
-        //                     sh "terraform workspace select ${params.WORKSPACE}"
-        //                 }
-        //                 sh "terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' \
-        //                 -out terraform.tfplan;echo \$? > status"
-        //                 stash name: "terraform-plan", includes: "terraform.tfplan"
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('TerraformApply'){
-        //     steps {
-        //         script{
-        //             def apply = false
-        //             try {
-        //                 input message: 'Can you please confirm the apply', ok: 'Ready to Apply the Config'
-        //                 apply = true
-        //             } catch (err) {
-        //                 apply = false
-        //                  currentBuild.result = 'UNSTABLE'
-        //             }
-        //             if(apply){
-        //                 dir('jenkins-terraform-pipeline/ec2_pipeline/'){
-        //                     unstash "terraform-plan"
-        //                     sh 'terraform apply terraform.tfplan'
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-    // }
+        stage('TerraformPlan'){
+            steps {
+                dir('/dev'){
+                    script {
+                        try {
+                            sh "terraform workspace new ${params.WORKSPACE}"
+                        } catch (err) {
+                            sh "terraform workspace select ${params.WORKSPACE}"
+                        }
+                        sh "terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' \
+                        -out terraform.tfplan;echo \$? > status"
+                        stash name: "terraform-plan", includes: "terraform.tfplan"
+                    }
+                }
+            }
+        }
+        stage('TerraformApply'){
+            steps {
+                script{
+                    def apply = false
+                    try {
+                        input message: 'Can you please confirm the apply', ok: 'Ready to Apply the Config'
+                        apply = true
+                    } catch (err) {
+                        apply = false
+                         currentBuild.result = 'UNSTABLE'
+                    }
+                    if(apply){
+                        dir('/dev'){
+                            unstash "terraform-plan"
+                            // sh 'terraform apply terraform.tfplan'
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 // #!groovy
 
