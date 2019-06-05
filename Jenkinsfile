@@ -12,7 +12,7 @@ env.AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
 
 node {
 
-  stage(‘Set Terraform path’) {
+  stage('Set Terraform path') {
     steps {
         script {
             def tfHome = tool name: ‘Terraform’
