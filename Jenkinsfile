@@ -24,38 +24,38 @@ pipeline {
             }
         }
 
-        // stage('TerraformFormat'){
-        //     steps {
-        //         dir('/dev'){
-        //             sh "terraform fmt -list=true -write=false -diff=true -check=true"
-        //         }
-        //     }
-        // }
+        stage('TerraformFormat'){
+            steps {
+                dir('./dev'){
+                    sh "terraform fmt -list=true -write=false -diff=true -check=true"
+                }
+            }
+        }
 
-        // stage('TerraformValidate'){
-        //     steps {
-        //         dir('/dev'){
-        //             sh "terraform validate"
-        //         }
-        //     }
-        // }
+        stage('TerraformValidate'){
+            steps {
+                dir('./dev'){
+                    sh "terraform validate"
+                }
+            }
+        }
 
-        // stage('TerraformPlan'){
-        //     steps {
-        //         dir('/dev'){
-        //             script {
-        //                 try {
-        //                     sh "terraform workspace new ${params.WORKSPACE}"
-        //                 } catch (err) {
-        //                     sh "terraform workspace select ${params.WORKSPACE}"
-        //                 }
-        //                 sh "terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' \
-        //                 -out terraform.tfplan;echo \$? > status"
-        //                 stash name: "terraform-plan", includes: "terraform.tfplan"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('TerraformPlan'){
+            steps {
+                dir('./dev'){
+                    script {
+                        try {
+                            sh "terraform workspace new ${params.WORKSPACE}"
+                        } catch (err) {
+                            sh "terraform workspace select ${params.WORKSPACE}"
+                        }
+                        sh "terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' \
+                        -out terraform.tfplan;echo \$? > status"
+                        stash name: "terraform-plan", includes: "terraform.tfplan"
+                    }
+                }
+            }
+        }
         // stage('TerraformApply'){
         //     steps {
         //         script{
