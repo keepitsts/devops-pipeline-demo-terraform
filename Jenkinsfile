@@ -7,7 +7,7 @@ pipeline {
         string(name: 'WORKSPACE', defaultValue: 'development', description:'setting up workspace for terraform')
     }
     environment {
-        TF_HOME = tool('terraform-0.11.8')
+        TF_HOME = tool('terraform-0.11.10')
         TF_IN_AUTOMATION = "true"
         PATH = "$TF_HOME:$PATH"
         ACCESS_KEY = credentials('jenkins-aws-secret-key-id')
