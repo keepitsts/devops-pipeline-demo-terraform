@@ -29,6 +29,7 @@ node {
 
   stage ('Terraform Plan') {
     dir("dev") {
+        sh '/usr/local/bin/terraform init'
         sh '/usr/local/bin/terraform plan -no-color -out=create.tfplan'
     }
     
