@@ -4,7 +4,7 @@ pipeline {
         "org.jenkinsci.plugins.terraform.TerraformInstallation" "terraform-0.11.10"
     }
     parameters {
-        string(name: 'WORKSPACE', defaultValue: '/tmp', description:'setting up workspace for terraform')
+        string(name: 'WORKSPACE', defaultValue: 'development', description:'setting up workspace for terraform')
     }
     environment {
         TF_HOME = tool('terraform-0.11.10')
@@ -16,7 +16,7 @@ pipeline {
     stages {
             stage('TerraformInit'){
             steps {
-                dir('/dev'){
+                dir('./dev'){
                     sh "terraform init -input=false"
                     sh "echo \$PWD"
                     sh "whoami"
