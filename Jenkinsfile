@@ -39,7 +39,13 @@ pipeline {
                 }
             }
         }
-
+        stage('TerraformPlan'){
+            steps {
+                dir('./dev'){
+                    sh "terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY'"
+                }
+            }
+        }
         // stage('TerraformPlan'){
         //     steps {
         //         dir('./dev'){
