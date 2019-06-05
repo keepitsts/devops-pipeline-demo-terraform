@@ -68,9 +68,9 @@ pipeline {
                          currentBuild.result = 'UNSTABLE'
                     }
                     if(apply){
-                        dir('/dev'){
+                        dir('./dev'){
                             unstash "terraform-plan"
-                            // sh 'terraform apply terraform.tfplan'
+                            sh 'terraform apply terraform.tfplan'
                         }
                     }
                 }
