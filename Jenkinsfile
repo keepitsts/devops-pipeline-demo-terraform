@@ -11,8 +11,18 @@ env.AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID
 env.AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY
 
 node {
-  env.PATH += ":/opt/terraform_0.7.13/"
 
+  stage(‘Set Terraform path’) {
+    steps {
+        script {
+            def tfHome = tool name: ‘Terraform’
+            env.PATH = “${tfHome}:${env.PATH}”
+        }
+        sh ‘terraform — version’
+
+
+        }   
+  }
   stage ('Checkout') {
     checkout scm
   }
