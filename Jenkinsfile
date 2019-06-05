@@ -1,14 +1,14 @@
 #!groovy
 
 // Build Parameters
-properties([ parameters([
-  string( name: 'AWS_ACCESS_KEY_ID', defaultValue: ''),
-  string( name: 'AWS_SECRET_ACCESS_KEY', defaultValue: '')
-]), pipelineTriggers([]) ])
+// properties([ parameters([
+//   string( name: 'AWS_ACCESS_KEY_ID', defaultValue: ''),
+//   string( name: 'AWS_SECRET_ACCESS_KEY', defaultValue: '')
+// ]), pipelineTriggers([]) ])
 
 // Environment Variables
-env.AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID
-env.AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY
+env.AWS_ACCESS_KEY_ID = credentials('jenkins-aws-secret-key-id')
+env.AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
 
 node {
 
