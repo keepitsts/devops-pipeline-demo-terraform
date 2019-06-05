@@ -56,26 +56,26 @@ pipeline {
                 }
             }
         }
-        // stage('TerraformApply'){
-        //     steps {
-        //         script{
-        //             def apply = false
-        //             try {
-        //                 input message: 'Can you please confirm the apply', ok: 'Ready to Apply the Config'
-        //                 apply = true
-        //             } catch (err) {
-        //                 apply = false
-        //                  currentBuild.result = 'UNSTABLE'
-        //             }
-        //             if(apply){
-        //                 dir('/dev'){
-        //                     unstash "terraform-plan"
-        //                     // sh 'terraform apply terraform.tfplan'
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        stage('TerraformApply'){
+            steps {
+                script{
+                    def apply = false
+                    try {
+                        input message: 'Can you please confirm the apply', ok: 'Ready to Apply the Config'
+                        apply = true
+                    } catch (err) {
+                        apply = false
+                         currentBuild.result = 'UNSTABLE'
+                    }
+                    if(apply){
+                        dir('/dev'){
+                            unstash "terraform-plan"
+                            // sh 'terraform apply terraform.tfplan'
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 // #!groovy
