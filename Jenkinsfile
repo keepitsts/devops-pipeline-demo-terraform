@@ -56,7 +56,7 @@ pipeline {
         //         }
         //     }
         // }
-        stage('TerraformApply'){
+        stage('TerraformDestroy'){
             steps {
                 script{
                     def apply = false
@@ -70,7 +70,7 @@ pipeline {
                     if(apply){
                         dir('./dev'){
                             // unstash "terraform-plan"
-                            sh 'terraform apply --auto-approve'//terraform.tfplan'
+                            sh 'terraform destroy --auto-approve'//terraform.tfplan'
                         }
                     }
                 }
