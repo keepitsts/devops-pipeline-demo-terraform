@@ -1,5 +1,3 @@
-###Jenkinsfile###
-
 import groovy.json.JsonOutput
 
 //git env vars
