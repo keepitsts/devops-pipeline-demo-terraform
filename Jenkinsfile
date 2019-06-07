@@ -23,7 +23,7 @@ node {
                 sh "rm status"
             }
             sh "ls"
-            sh "cd dev"
+            process.chdir("dev");
             sh "ls"
             sh "terraform get"
             sh "terraform init"
