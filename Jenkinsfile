@@ -23,6 +23,7 @@ node {
                 sh "rm status"
             }
             sh "cd ./dev"
+            sh "pwd"
             sh "terraform get"
             sh "terraform init"
             sh "set +e; terraform plan -out=plan.out -detailed-exitcode; echo \$? &gt; status"
