@@ -22,7 +22,7 @@ node {
             if (fileExists("status")) {
                 sh "rm status"
             }
-            sh "cd ./dev"
+            sh "./dev"
             sh "pwd"
             sh "terraform get"
             sh "terraform init"
