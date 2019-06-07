@@ -25,11 +25,7 @@ node {
             sh "ls"
             sh "pwd"
             dir ('dv') {
-              sh 'pwd'
-            }
-            sh "ls"
-            sh "pwd"
-            sh "terraform get"
+                         sh "terraform get"
             sh "terraform init"
             sh "set +e; terraform plan -out=plan.out -detailed-exitcode; echo \$? &gt; status"
             def exitCode = readFile('status').trim()
@@ -70,5 +66,7 @@ node {
                     currentBuild.result = 'FAILURE'
                 }
             }
+            }
+
     }
 }
