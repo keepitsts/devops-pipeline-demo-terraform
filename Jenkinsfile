@@ -22,8 +22,8 @@ node {
             if (fileExists("status")) {
                 sh "rm status"
             }
-            sh "./dev"
-            sh "pwd"
+            sh "ls"
+            sh "./devops-pipeline-demo-terraform/dev"
             sh "terraform get"
             sh "terraform init"
             sh "set +e; terraform plan -out=plan.out -detailed-exitcode; echo \$? &gt; status"
