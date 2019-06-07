@@ -23,7 +23,7 @@ node {
                 sh "rm status"
             }
             sh "ls"
-            sh "./devops-pipeline-demo-terraform/dev"
+            sh "cd dev"
             sh "terraform get"
             sh "terraform init"
             sh "set +e; terraform plan -out=plan.out -detailed-exitcode; echo \$? &gt; status"
