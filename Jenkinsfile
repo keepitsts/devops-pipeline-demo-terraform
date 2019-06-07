@@ -24,6 +24,7 @@ node {
             }
             sh "ls"
             sh "cd dev"
+            sh "ls"
             sh "terraform get"
             sh "terraform init"
             sh "set +e; terraform plan -out=plan.out -detailed-exitcode; echo \$? &gt; status"
