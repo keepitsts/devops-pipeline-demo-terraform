@@ -1,109 +1,49 @@
-import groovy.json.JsonOutput
-
-//git env vars
-
-env.git_url = 'https://user@bitbucket.org/user/terraform-ci.git'
-
-env.git_branch = 'master'
-
-//jenkins env vars
-
-env.jenkins_server_url = 'http://ec2-23-20-93-199.compute-1.amazonaws.com:8080'
-
-env.jenkins_node_custom_workspace_path = "/opt/bitnami/apps/jenkins/jenkins_home/${JOB_NAME}/workspace"
-
-env.jenkins_node_label = 'master'
-
-env.terraform_version = '0.12.1'
-
 pipeline {
+    agent any
 
-agent {
+    environment {
+        TF_IN_AUTOMATION      = '1'
+    }
 
-node {
+    stages {
+        stage('Plan') {
+            steps {
+                script {
+                    currentBuild.displayName = "${version}"
+                }
+                sh 'terraform init -input=false'
+                sh 'terraform workspace select ${environment}'
+                sh "terraform plan -input=false -out tfplan -var 'version=${version}' --var-file=environments/${environment}.tfvars"
+                sh 'terraform show -no-color tfplan > tfplan.txt'
+            }
+        }
 
-customWorkspace "$jenkins_node_custom_workspace_path"
+        stage('Approval') {
+            when {
+                not {
+                    equals expected: true, actual: params.autoApprove
+                }
+            }
 
-label "$jenkins_node_label"
+            steps {
+                script {
+                    def plan = readFile 'tfplan.txt'
+                    input message: "Do you want to apply the plan?",
+                        parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
+                }
+            }
+        }
 
-} 
+        stage('Apply') {
+            steps {
+                sh "terraform apply -input=false tfplan"
+            }
+        }
+    }
 
+    post {
+        always {
+            archiveArtifacts artifacts: 'tfplan.txt'
+        }
+    }
 }
-
-stages {
-
-stage('fetch_latest_code') {
-
-steps {
-
-git branch: "$git_branch" ,
-
-url: "$git_url"
-
-}
-
-}
-
-stage('install_deps') {
-
-steps {
-
-sh "sudo apt install wget zip python-pip -y"
-
-sh "cd /tmp"
-
-sh "curl -o terraform.zip https://releases.hashicorp.com/terraform/'$terraform_version'/terraform_'$terraform_version'_linux_amd64.zip"
-
-sh "unzip terraform.zip"
-
-sh "sudo mv terraform /usr/bin"
-
-sh "rm -rf terraform.zip"
-
-}
-
-}
-
-stage('init_and_plan') {
-
-steps {
-
-sh "sudo terraform init $jenkins_node_custom_workspace_path/workspace"
-
-sh "sudo terraform plan $jenkins_node_custom_workspace_path/workspace"
-
-}
-
-}
-
-stage('approve') {
-
-steps {
-
-input 'Do you approve deployment?'
-
-}
-
-}
-
-stage('apply_changes') {
-
-steps {
-
-sh "echo 'yes' | sudo terraform apply $jenkins_node_custom_workspace_path/workspace"
-
-}
-
-}
-
-}
-
-post { 
-
-  always { 
-
-    cleanWs()
-
-   }
-
-  }
