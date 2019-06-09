@@ -32,17 +32,17 @@ module "ec2_server" {
 
     key = "demo_pipeline"
 }
-module "database" {
-    source = "../modules/rds"
+# module "database" {
+#     source = "../modules/rds"
 
-    profile = "sts"
-    storage = 20
-    engine = "mysql"
-    engine_version = "5.7"
-    db_subnet_group = "non_prod_subnet_group"
-    db_instance_class = "db.t3.medium"
-    multi_az = false
-    db_name = "devdemodatabase"
-    db_username = "app_user"
-    db_password = "changeme"
-}
+#     profile = "sts"
+#     storage = 20
+#     engine = "mysql"
+#     engine_version = "5.7"
+#     db_subnet_group = "non_prod_subnet_group"
+#     db_instance_class = "db.t3.medium"
+#     multi_az = false
+#     db_name = "devdemodatabase"
+#     db_username = "app_user"
+#     db_password = "changeme"
+# }
