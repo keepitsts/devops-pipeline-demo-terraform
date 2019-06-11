@@ -31,13 +31,36 @@ data "template_file" "init" {
   EOF
 }
 
-resource "aws_instance" "ec2" {
+data "aws_ami" "amazon-linux-2" {
+  most_recent = true
+  owners = ["amazon"]
+  
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
+  }
+}
+resource "aws_instance" "server" {
   user_data = "${data.template_file.init.rendered}"
-  ami           = "${var.ami}"
+  ami           = "${data.aws_ami.amazon-linux-2.id}"
   instance_type = "${var.instance_type}"
 
-  vpc_security_group_ids = "${var.vpc_security_group_ids}"
+  key_name = "${var.key}"
+
+  vpc_security_group_ids = ["${var.security_groups}"]
   subnet_id = "${var.subnet_id}"
+
+  # iam_instance_profile = "${var.role}"
+
+  lifecycle {
+    # prevent rebuild if a newer ami is released
+    ignore_changes = [ "ami" ]
+  }
 
   root_block_device {
     volume_size = "${var.OSDiskSize}"
